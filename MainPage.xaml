@@ -2,35 +2,29 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Phoneword.MainPage">
-    <Frame Background="AliceBlue" HasShadow="True" Padding="40" HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="400">
-        <Border StrokeShape="RoundRectangle 24"   
-                BackgroundColor="White">
-                <Border.Shadow>
-                    <Shadow Brush="Gray"
-                        Offset="20,20"
-                        Radius="40"
-                        Opacity="0.8"/>
-                </Border.Shadow>
-            <VerticalStackLayout Spacing="15" Padding="20">
+    <Frame Background="AliceBlue" HasShadow="True" Padding="40" HorizontalOptions="Center" VerticalOptions="Center">
+
+
+        <VerticalStackLayout Spacing="15" Padding="20">
 
             <Label Text="Enter a Phonenumber"
                 FontSize="20"/>
-        
-        <Entry x:Name = "PhoneNumberText"
+
+            <Entry x:Name = "PhoneNumberText"
                Text="1-555-NETMAUI"/>
 
-        <Button x:Name="TranslateButton"
+            <Button x:Name="TranslateButton"
                 Text="Translate"
                 Clicked="OnTranslate"/>
 
-        <Button x:Name="CallButton"
+            <Button x:Name="CallButton"
                 Text="Call"
                 IsEnabled="false"
                 Clicked="OnCall" />
-        
 
-    </VerticalStackLayout>
-        </Border>
+
+        </VerticalStackLayout>
+        
     </Frame>
 
 </ContentPage>
