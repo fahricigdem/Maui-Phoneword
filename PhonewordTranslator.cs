@@ -32,10 +32,10 @@ public static class PhonewordTranslator
         return newNumber.ToString();
     }
 
-    static bool Contains(this string keyString, char c)
-    {
-        return keyString.IndexOf(c) >= 0;
-    }
+    //static bool Contains(this string keyString, char c)
+    //{
+    //    return keyString.IndexOf(c) >= 0;
+    //}
 
     static readonly string[] digits = {
         "ABC", "DEF", "GHI", "JKL", "MNO", "PQRS", "TUV", "WXYZ"

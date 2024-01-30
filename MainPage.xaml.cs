@@ -1,4 +1,7 @@
-﻿namespace Phoneword
+﻿using System.ComponentModel;
+using System.Diagnostics;
+
+namespace Phoneword
 {
     public partial class MainPage : ContentPage
     {
@@ -7,12 +10,11 @@
             InitializeComponent();
         }
 
-        string translatedNumber;
+        string translatedNumber = "";
 
         private void OnTranslate(object sender, EventArgs e)
         {
-            string enteredNumber = PhoneNumberText.Text;
-            translatedNumber = PhonewordTranslator.ToNumber(enteredNumber);
+            translatedNumber = PhonewordTranslator.ToNumber(PhoneNumberText.Text);
             if (!string.IsNullOrEmpty(translatedNumber) ) 
             {
                 CallButton.IsEnabled = true;
@@ -27,10 +29,38 @@
 
         async void OnCall(object sender, EventArgs e)
         {
-            if (await this.DisplayAlert("Dial a Number", "Would you like to call " + translatedNumber + "?", "Yes", "No"))
+            bool isNumberApproved = await GetResultOfDialog();
+
+            if (isNumberApproved == true)
             {
-                //TODO: dial the phone
+                try
+                {
+                    if (PhoneDialer.IsSupported)
+                    {
+                        PhoneDialer.Default.Open(translatedNumber);
+                    }
+                }
+                catch (ArgumentNullException)
+                {
+                    await DisplayAlert("Unable to dial", "Phone number was not valid.", "OK");
+                }
+                catch (Exception)
+                {
+                    // Other error has occurred.
+                    await DisplayAlert("Unable to dial", "Phone dialing failed.", "OK");
+                }
+
             }
+        }
+
+        async Task<bool> GetResultOfDialog()
+        {
+            string alertHeader = "Dial a Number";
+            string alertText = "Would you like to call " + translatedNumber + "?";
+            string approvalButtonText = "Yes";
+            string disapprovalButtonText = "No";
+            bool shouldTheNumberCalled = await this.DisplayAlert(alertHeader, alertText, approvalButtonText, disapprovalButtonText);
+            return shouldTheNumberCalled;
         }
 
       
